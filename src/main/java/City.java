@@ -5,7 +5,6 @@ public class City {
     private String city_name;
 
     public City() {
-
     }
 
     public City(int city_id, String city_name) {
