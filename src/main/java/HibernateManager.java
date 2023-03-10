@@ -1,24 +1,28 @@
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import javax.persistence.EntityManager;
 import java.util.function.Consumer;
 
 public class HibernateManager {
-    private SessionFactory sessionFactory;
+    private static SessionFactory sessionFactory;
 
-    public HibernateManager() {
-        Configuration configuration = new Configuration().configure();
-        configuration.addAnnotatedClass(Employee.class);
-        this.sessionFactory = configuration.buildSessionFactory();
-    }
+    private HibernateManager() {}
 
-    public void withEntityManager (Consumer<EntityManager> function) {
-        try (Session session = this.sessionFactory.openSession()) {
-            session.beginTransaction();
-            function.accept(session);
-            session.getTransaction().commit();
+    public static SessionFactory getSessionFactory() {
+        if (sessionFactory == null) {
+            try {
+                Configuration configuration = new Configuration().configure();
+                configuration.addAnnotatedClass(Employee.class);
+                StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
+                sessionFactory = configuration.buildSessionFactory(builder.build());
+
+            } catch (Exception e) {
+                System.out.println("Исключение!" + e);
+            }
         }
+        return sessionFactory;
     }
 }
 

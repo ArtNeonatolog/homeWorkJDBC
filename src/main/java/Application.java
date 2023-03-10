@@ -16,11 +16,8 @@ import java.util.Properties;
 
 public class Application {
     public static void main(String[] args) {
-        EmployeeDAOImpl employeeDAO = new EmployeeDAOImpl(new HibernateManager());
-        employeeDAO.createEmployee(); //работает, ничего не вовзращает (void)
-        employeeDAO.readAll(); //не работает, выходит ошибка
-        employeeDAO.readById(2); //не работает, выходит ошибка
-        employeeDAO.updateEmployee(?); //откуда здесь взять employee?
-        employeeDAO.deleteEmployee(?); //откуда здесь взять employee?
-        }
+        EmployeeDAOImpl employeeDAO = new EmployeeDAOImpl();
+        Employee employee = new Employee(7L,"Olga", "Ivanova", "female",28,18);
+        employeeDAO.deleteEmployee(employee);
+    }
     }

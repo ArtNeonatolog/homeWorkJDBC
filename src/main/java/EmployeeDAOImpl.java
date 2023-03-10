@@ -1,5 +1,6 @@
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.sql.Select;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,49 +11,49 @@ import java.util.List;
 
 public class EmployeeDAOImpl implements EmployeeDAO {
 
-    private HibernateManager hibernateManager;
+    public EmployeeDAOImpl() {
 
-    public EmployeeDAOImpl(HibernateManager hibernateManager) {
-        this.hibernateManager = hibernateManager;
     }
 
     @Override
-    public void createEmployee() {
-        hibernateManager.withEntityManager(em -> {
-            Employee employee = new Employee();
-            employee.setFirst_name("Vladislav");
-            employee.setLast_name("Popov");
-            employee.setGender("male");
-            employee.setAge(40);
-            employee.setCity(12);
-            em.persist(employee);
-        });
+    public void createEmployee(Employee employee) {
+        try (Session session = HibernateManager.getSessionFactory().openSession()) {
+
+            Transaction transaction = session.beginTransaction();
+
+            session.save(employee);
+
+            transaction.commit();
+        }
     }
 
     @Override
-    public void readById(Integer id) {
-       hibernateManager.withEntityManager(em -> {
-            Employee employee = em.find(Employee.class, id);
-            System.out.println(employee);
-        });
+    public Employee readById(Long id) {
+        return HibernateManager.getSessionFactory().openSession().get(Employee.class, id);
     }
 
     @Override
-    public void readAll() {
-        hibernateManager.withEntityManager(em -> {
-            List<Employee> employeeList = em.createQuery("SELECT Employee", Employee.class).getResultList();
-            System.out.println(employeeList);
-        });
+    public List<Employee> readAll() {
+        List<Employee> listOfEmployees = HibernateManager
+                .getSessionFactory().openSession().createQuery("From Employee ").list();
+        return listOfEmployees;
     }
 
     @Override
     public void updateEmployee(Employee employee) {
-        hibernateManager.withEntityManager(em -> em.refresh(employee));
+        try (Session session = HibernateManager.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+            session.update(employee);
+            transaction.commit();
+        }
     }
 
     @Override
     public void deleteEmployee(Employee employee) {
-
-        hibernateManager.withEntityManager(em -> em.remove(employee));
+        try (Session session = HibernateManager.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+            session.delete(employee);
+            transaction.commit();
+        }
     }
 }
