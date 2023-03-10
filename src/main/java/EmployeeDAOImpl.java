@@ -10,7 +10,11 @@ import java.util.List;
 
 public class EmployeeDAOImpl implements EmployeeDAO {
 
-    HibernateManager hibernateManager = new HibernateManager();
+    private HibernateManager hibernateManager;
+
+    public EmployeeDAOImpl(HibernateManager hibernateManager) {
+        this.hibernateManager = hibernateManager;
+    }
 
     @Override
     public void createEmployee() {
@@ -20,15 +24,15 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             employee.setLast_name("Popov");
             employee.setGender("male");
             employee.setAge(40);
-            employee.setCity(new City(10, "Barcelona"));
+            employee.setCity(12);
             em.persist(employee);
         });
     }
 
     @Override
-    public void readById(int id) {
-        hibernateManager.withEntityManager(em -> {
-            Employee employee = em.createQuery("SELECT Employee", Employee.class).getSingleResult();
+    public void readById(Integer id) {
+       hibernateManager.withEntityManager(em -> {
+            Employee employee = em.find(Employee.class, id);
             System.out.println(employee);
         });
     }
@@ -48,6 +52,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
     @Override
     public void deleteEmployee(Employee employee) {
+
         hibernateManager.withEntityManager(em -> em.remove(employee));
     }
 }

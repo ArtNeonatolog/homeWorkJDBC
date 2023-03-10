@@ -6,11 +6,8 @@
 <hibernate-configuration>
 <session-factory>
     <property name="connection.url">jdbc:postgresql://localhost:5432/skypro_name</property>
-    <property name="connection.driver_class">org.postgresql.Driver></property>
+    <property name="connection.driver_class">org.postgresql.Driver</property>
     <property name="connection.username">postgres</property>
-    <property name="hibernate.c3p0.min_size">5</property>
-    <property name="hibernate.c3p0.max_size">200</property>
-    <property name="hibernate.c3p0.max_statements">200</property>
     <property name="connection.password">207877</property>
     <property name="dialect">org.hibernate.dialect.PostgreSQL10Dialect</property>
     <property name="hbm2ddl.auto">update</property>

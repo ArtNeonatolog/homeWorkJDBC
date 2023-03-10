@@ -10,16 +10,21 @@ public class Employee {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "first_name")
     private String first_name;
+    @Column(name = "last_name")
     private String last_name;
+    @Column(name = "gender")
     private String gender;
-    private int age;
-    private City city;
+    @Column(name = "age", nullable = false)
+    private Integer age;
+    @Column(name = "city", nullable = false)
+    private Integer city;
 
     public Employee() {
     }
 
-    public Employee(String first_name, String last_name, String gender, int age, City city) {
+    public Employee(String first_name, String last_name, String gender, Integer age, Integer city) {
         this.first_name = first_name;
         this.last_name = last_name;
         this.gender = gender;
@@ -27,7 +32,7 @@ public class Employee {
         this.city = city;
     }
 
-    public Employee(Long id, String first_name, String last_name, String gender, int age, City city) {
+    public Employee(Long id, String first_name, String last_name, String gender, Integer age, Integer city) {
         this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -72,15 +77,15 @@ public class Employee {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 
-    public City getCity() {
+    public int getCity() {
         return city;
     }
 
-    public void setCity(City city) {
+    public void setCity(Integer city) {
         this.city = city;
     }
 
