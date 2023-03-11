@@ -12,6 +12,7 @@ import java.util.List;
 public class CityDAOImpl implements CityDAO {
 
     public CityDAOImpl() {
+
     }
 
     @Override
