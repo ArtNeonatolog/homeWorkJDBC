@@ -8,7 +8,7 @@ import java.util.Objects;
 @Table (name = "employee")
 public class Employee {
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue (strategy = GenerationType.TABLE)
     private Long id;
     @Column(name = "first_name")
     private String first_name;
@@ -18,13 +18,14 @@ public class Employee {
     private String gender;
     @Column(name = "age", nullable = false)
     private Integer age;
-    @Column(name = "city", nullable = false)
-    private Integer city;
+    @ManyToOne (optional = false)
+    @JoinColumn (name = "city_id")
+    private City city;
 
     public Employee() {
     }
 
-    public Employee(String first_name, String last_name, String gender, Integer age, Integer city) {
+    public Employee(String first_name, String last_name, String gender, Integer age, City city) {
         this.first_name = first_name;
         this.last_name = last_name;
         this.gender = gender;
@@ -32,7 +33,7 @@ public class Employee {
         this.city = city;
     }
 
-    public Employee(Long id, String first_name, String last_name, String gender, Integer age, Integer city) {
+    public Employee(Long id, String first_name, String last_name, String gender, Integer age, City city) {
         this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -81,11 +82,11 @@ public class Employee {
         this.age = age;
     }
 
-    public int getCity() {
+    public City getCity() {
         return city;
     }
 
-    public void setCity(Integer city) {
+    public void setCity(City city) {
         this.city = city;
     }
 

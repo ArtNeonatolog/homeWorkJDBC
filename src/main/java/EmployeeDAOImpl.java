@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class EmployeeDAOImpl implements EmployeeDAO {
@@ -18,11 +19,8 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     @Override
     public void createEmployee(Employee employee) {
         try (Session session = HibernateManager.getSessionFactory().openSession()) {
-
             Transaction transaction = session.beginTransaction();
-
             session.save(employee);
-
             transaction.commit();
         }
     }
@@ -35,7 +33,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     @Override
     public List<Employee> readAll() {
         List<Employee> listOfEmployees = HibernateManager
-                .getSessionFactory().openSession().createQuery("From Employee ").list();
+                .getSessionFactory().openSession().createQuery("From Employee").list();
         return listOfEmployees;
     }
 
@@ -52,7 +50,13 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     public void deleteEmployee(Employee employee) {
         try (Session session = HibernateManager.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
-            session.delete(employee);
+            City city = session.find(City.class, employee.getCity());
+            Iterator<Employee> employeeIterator = city.getEmployeeList().iterator();
+            while (employeeIterator.hasNext()) {
+                Employee employee1 = employeeIterator.next();
+                employeeIterator.remove();
+                session.delete(employee1);
+            }
             transaction.commit();
         }
     }
