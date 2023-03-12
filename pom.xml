@@ -7,36 +7,32 @@
   <properties>
     <maven.compiler.source>18</maven.compiler.source>
     <maven.compiler.target>18</maven.compiler.target>
+    <hibernate-version>5.6.14.Final</hibernate-version>
   </properties>
   <version>1.0-SNAPSHOT</version>
   <name>homeWorkJDBC Maven Webapp</name>
   <url>http://maven.apache.org</url>
   <dependencies>
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-entitymanager</artifactId>
+      <version>${hibernate-version}</version>
     </dependency>
-    <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-core</artifactId>
+      <version>${hibernate-version}</version>
+    </dependency>
     <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
       <version>42.5.4</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
   </dependencies>
   <build>
     <finalName>homeWorkJDBC</finalName>
     <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>18</source>
-          <target>18</target>
-        </configuration>
-        <version>3.10.1</version>
-      </plugin>
     </plugins>
   </build>
 </project>

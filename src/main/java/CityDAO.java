@@ -1,12 +1,12 @@
 import java.util.List;
 
 public interface CityDAO {
-    void createCity (City city);
-    City readById (int city_id);
+    City createCity (City city);
+    City readById (Long city_id);
 
     List<City> readAll();
 
-    void updateCityById(int id, String city_name);
+    void updateCity (City city);
 
-    void deleteCityById (int id);
+    void deleteCity (City city);
 }

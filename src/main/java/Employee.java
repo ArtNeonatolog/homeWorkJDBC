@@ -1,43 +1,56 @@
+import org.hibernate.annotations.Cascade;
+
+import javax.persistence.*;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
 
+@Entity
+@Table (name = "employee")
 public class Employee {
-    private int id;
+    @Id
+    @GeneratedValue (strategy = GenerationType.TABLE)
+    private Long id;
+    @Column(name = "first_name")
     private String first_name;
+    @Column(name = "last_name")
     private String last_name;
+    @Column(name = "gender")
     private String gender;
-    private int age;
-    private int city_id;
+    @Column(name = "age", nullable = false)
+    private Integer age;
+    @ManyToOne (optional = false)
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+    @JoinColumn (name = "city_id")
+    private City city;
 
     public Employee() {
-
     }
 
-    public Employee(String first_name, String last_name, String gender, int age, int city_id) {
+    public Employee(String first_name, String last_name, String gender, Integer age, City city) {
         this.first_name = first_name;
         this.last_name = last_name;
         this.gender = gender;
         this.age = age;
-        this.city_id = city_id;
+        this.city = city;
     }
 
-    public Employee(int id, String first_name, String last_name, String gender, int age, int city_id) {
+    public Employee(Long id, String first_name, String last_name, String gender, Integer age, City city) {
         this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
         this.gender = gender;
         this.age = age;
-        this.city_id = city_id;
+        this.city = city;
     }
 
-    public int getId() {
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getFirst_name() {
@@ -68,29 +81,16 @@ public class Employee {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 
-    public int getCity_id() {
-        return city_id;
+    public City getCity() {
+        return city;
     }
 
-    public void setCity_id(int city_id) {
-        this.city_id = city_id;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Employee employee = (Employee) o;
-        return id == employee.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
+    public void setCity(City city) {
+        this.city = city;
     }
 
     @Override
@@ -101,7 +101,7 @@ public class Employee {
                 ", last_name='" + last_name + '\'' +
                 ", gender='" + gender + '\'' +
                 ", age=" + age +
-                ", city_id=" + city_id +
+                ", city=" + city +
                 '}';
     }
 }
