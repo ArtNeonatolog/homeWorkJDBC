@@ -18,6 +18,10 @@ public class Application {
     public static void main(String[] args) {
         CityDAOImpl cityDAO = new CityDAOImpl();
         EmployeeDAOImpl employeeDAO = new EmployeeDAOImpl();
+        City newYork = cityDAO.createCity(new City("New York"));
+        employeeDAO.createEmployee(new Employee("Panov", "Pavel", "male", 34, newYork));
+        newYork.setCity_name("Moskva");
+        cityDAO.updateCity(newYork);
 
     }
     }

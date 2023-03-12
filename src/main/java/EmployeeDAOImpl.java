@@ -17,12 +17,14 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     }
 
     @Override
-    public void createEmployee(Employee employee) {
+    public Employee createEmployee(Employee employee) {
+        Employee employee1 = new Employee();
         try (Session session = HibernateManager.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
             session.save(employee);
             transaction.commit();
         }
+        return employee1;
     }
 
     @Override

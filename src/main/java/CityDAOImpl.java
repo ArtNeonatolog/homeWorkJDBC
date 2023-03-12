@@ -15,12 +15,14 @@ public class CityDAOImpl implements CityDAO {
     }
 
     @Override
-    public void createCity(City city) {
+    public City createCity(City city) {
+        City city1 = new City();
         try (Session session = HibernateManager.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
             session.save(city);
             transaction.commit();
         }
+        return city1;
     }
 
     @Override
@@ -38,13 +40,7 @@ public class CityDAOImpl implements CityDAO {
     public void updateCity(City city) {
         try (Session session = HibernateManager.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
-            City city1 = session.find(City.class, city.getCity_id());
-            Iterator<Employee> employeeIterator = city1.getEmployeeList().iterator();
-            while (employeeIterator.hasNext()) {
-                Employee employee = employeeIterator.next();
-                employeeIterator.remove();
-                session.update(employee);
-            }
+            session.update(city);
             transaction.commit();
         }
     }
