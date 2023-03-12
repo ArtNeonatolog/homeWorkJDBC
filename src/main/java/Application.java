@@ -17,7 +17,7 @@ import java.util.Properties;
 public class Application {
     public static void main(String[] args) {
         CityDAOImpl cityDAO = new CityDAOImpl();
-        cityDAO.deleteCity(cityDAO.readById(6L));
+        EmployeeDAOImpl employeeDAO = new EmployeeDAOImpl();
 
     }
     }

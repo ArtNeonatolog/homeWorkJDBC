@@ -1,3 +1,5 @@
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -19,6 +21,7 @@ public class Employee {
     @Column(name = "age", nullable = false)
     private Integer age;
     @ManyToOne (optional = false)
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     @JoinColumn (name = "city_id")
     private City city;
 

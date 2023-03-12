@@ -38,7 +38,13 @@ public class CityDAOImpl implements CityDAO {
     public void updateCity(City city) {
         try (Session session = HibernateManager.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
-            session.update(city);
+            City city1 = session.find(City.class, city.getCity_id());
+            Iterator<Employee> employeeIterator = city1.getEmployeeList().iterator();
+            while (employeeIterator.hasNext()) {
+                Employee employee = employeeIterator.next();
+                employeeIterator.remove();
+                session.update(employee);
+            }
             transaction.commit();
         }
     }
@@ -47,8 +53,16 @@ public class CityDAOImpl implements CityDAO {
     public void deleteCity(City city) {
         try (Session session = HibernateManager.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
-            session.delete(city);
+            City city1 = session.find(City.class, city.getCity_id());
+            Iterator<Employee> employeeIterator = city1.getEmployeeList().iterator();
+            while (employeeIterator.hasNext()) {
+                Employee employee = employeeIterator.next();
+                employeeIterator.remove();
+                session.delete(employee);
+            }
             transaction.commit();
         }
+
     }
+
 }

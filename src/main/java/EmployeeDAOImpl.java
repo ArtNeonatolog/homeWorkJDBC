@@ -50,13 +50,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     public void deleteEmployee(Employee employee) {
         try (Session session = HibernateManager.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
-            City city = session.find(City.class, employee.getCity());
-            Iterator<Employee> employeeIterator = city.getEmployeeList().iterator();
-            while (employeeIterator.hasNext()) {
-                Employee employee1 = employeeIterator.next();
-                employeeIterator.remove();
-                session.delete(employee1);
-            }
+            session.delete(employee);
             transaction.commit();
         }
     }
