@@ -49,12 +49,12 @@ public class CityDAOImpl implements CityDAO {
     public void deleteCity(City city) {
         try (Session session = HibernateManager.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
-            City city1 = session.find(City.class, city.getCity_id());
-            Iterator<Employee> employeeIterator = city1.getEmployeeList().iterator();
+            Iterator<Employee> employeeIterator = city.getEmployeeList().iterator();
             while (employeeIterator.hasNext()) {
                 Employee employee = employeeIterator.next();
                 employeeIterator.remove();
                 session.delete(employee);
+                session.delete(city);
             }
             transaction.commit();
         }
