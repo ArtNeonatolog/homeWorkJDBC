@@ -1,3 +1,6 @@
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +55,9 @@ public class City {
         this.city_name = city_name;
     }
 
+    public void removeEmployee(Employee employee) {
+        this.employeeList.remove(employee);
+    }
     @Override
     public String toString() {
         return "City{" +

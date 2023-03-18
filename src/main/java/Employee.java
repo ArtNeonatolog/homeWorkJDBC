@@ -1,16 +1,19 @@
+
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.List;
-import java.util.Objects;
+
+import static org.hibernate.annotations.CascadeType.DELETE;
+import static org.hibernate.annotations.CascadeType.SAVE_UPDATE;
 
 @Entity
 @Table (name = "employee")
 public class Employee {
     @Id
     @GeneratedValue (strategy = GenerationType.TABLE)
+    @Column (name = "id")
     private Long id;
     @Column(name = "first_name")
     private String first_name;
@@ -21,7 +24,6 @@ public class Employee {
     @Column(name = "age", nullable = false)
     private Integer age;
     @ManyToOne (optional = false)
-    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     @JoinColumn (name = "city_id")
     private City city;
 
